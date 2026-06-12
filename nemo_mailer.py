@@ -7,6 +7,12 @@ ENV_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'credentials
 
 def load_creds():
     d = {}
+    for key in ['GMAIL_USER', 'GMAIL_APP_PASSWORD', 'EMAIL_TO']:
+        val = os.environ.get(key)
+        if val:
+            d[key] = val
+    if d:
+        return d
     try:
         with open(ENV_PATH) as f:
             for line in f:

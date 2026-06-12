@@ -1,4 +1,4 @@
-"""Load credentials from credentials.env"""
+"""Load credentials from env vars or credentials.env"""
 import os
 
 ENV_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'credentials.env')
@@ -21,7 +21,7 @@ def _load():
     return d
 
 def get(key, default=''):
-    return _load().get(key, default)
+    return os.environ.get(key, _load().get(key, default))
 
 def telegram_token():
     return get('TELEGRAM_TOKEN')

@@ -1,0 +1,25 @@
+name: Nemo Scheduled Tasks
+
+on:
+  schedule:
+    - cron: '25 3 * * 1-5'    # 8:55 AM IST — Morning Brief
+    - cron: '50 3 * * 1-5'    # 9:20 AM IST — First Signal
+    - cron: '*/15 3-10 * * 1-5'  # 9:15 AM-3:30 PM IST — Continuous Scan
+
+jobs:
+  call-endpoint:
+    if: github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    environment: nemo
+    steps:
+      - name: Route by cron
+        run: |
+          EVENT="${{ github.event.schedule }}"
+          case "$EVENT" in
+            "25 3 * * 1-5")   URL="${{ secrets.NEMO_URL }}/morning-brief" ;;
+            "50 3 * * 1-5")   URL="${{ secrets.NEMO_URL }}/first-signal" ;;
+            "*/15 3-10 * * 1-5") URL="${{ secrets.NEMO_URL }}/scan" ;;
+            *) echo "Unknown schedule"; exit 0 ;;
+          esac
+          echo "Calling: $URL"
+          curl -s --connect-timeout 30 --max-time 120 "$URL"

@@ -1,0 +1,18 @@
+name: nemo-bot
+type: web
+port: 8080
+regions:
+  - fra
+env:
+  - key: TELEGRAM_TOKEN
+    value: "8028776380:AAFH-MwDgVf_JwsgCCqXMVq7lrjSlAVgCVI"
+  - key: TELEGRAM_CHAT_ID
+    value: "446307019"
+  - key: GEMINI_API_KEY
+    value: "AIzaSyA_JYyCqXLj8RmUHC4XcIzlIc1gsqwb0tM"
+  - key: GMAIL_USER
+    value: "neptune.works.hard@gmail.com"
+  - key: GMAIL_APP_PASSWORD
+    value: "algv wszg zwdj wvlw"
+  - key: EMAIL_TO
+    value: "houseneptune0@gmail.com"
