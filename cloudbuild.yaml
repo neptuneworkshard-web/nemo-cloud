@@ -1,0 +1,24 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/nemo/nemo-bot:latest', '-f', 'Dockerfile', '.']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/nemo/nemo-bot:latest']
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - 'nemo-bot'
+      - '--image=us-central1-docker.pkg.dev/$PROJECT_ID/nemo/nemo-bot:latest'
+      - '--region=us-central1'
+      - '--platform=managed'
+      - '--allow-unauthenticated'
+      - '--memory=1Gi'
+      - '--timeout=300'
+      - '--set-env-vars=PORT=8080'
+      - '--min-instances=0'
+      - '--max-instances=1'
+      - '--concurrency=1'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
