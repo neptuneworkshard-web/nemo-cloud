@@ -1,0 +1,9 @@
+﻿{
+    "version": 3,
+    "last_session": "2026-06-10T19:00:00Z",
+    "telegram_memory_msg_id": 141,
+    "user_name": "Abish",
+    "nemo_identity": "AI trading agent + digital brand designer + full-stack engineer + video editor",
+    "last_project": "DaVinci Resolve MCP Bridge Setup + Sithan Anjali Lightroom Preset",
+    "notes": "Uninstalled Resolve Studio, installed Resolve Free 21.0.00048 (trial). Created 'Sithan Anjali' Lightroom preset from Kerala wedding gallery analysis (warm film look: 5800K, +8 tint, +32 contrast, -55 highlights, -22 blacks, desaturated greens/aquas). Set up davinci-resolve-mcp bridge: CursorBridge.py deploys inside Resolve, resolve_mcp_bridge.py as MCP server. Bridge verified running on 127.0.0.1:9876, connected to project 'Wedding video'. MCP server added to opencode.jsonc (enabled: true). Unnecessary AI packages (demucs, faster-whisper, rembg) excluded from install - core bridge doesn't need them."
+}
