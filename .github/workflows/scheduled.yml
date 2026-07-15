@@ -9,18 +9,23 @@ on:
 
 jobs:
   call-endpoint:
-    if: github.event_name == 'schedule'
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     environment: nemo
     steps:
       - name: Route by cron
         run: |
           EVENT="${{ github.event.schedule }}"
-          case "$EVENT" in
-            "25 3 * * 1-5")   URL="${{ secrets.NEMO_URL }}/morning-brief" ;;
-            "50 3 * * 1-5")   URL="${{ secrets.NEMO_URL }}/first-signal" ;;
-            "*/15 3-10 * * 1-5") URL="${{ secrets.NEMO_URL }}/scan" ;;
-            *) echo "Unknown schedule"; exit 0 ;;
-          esac
+          if [ -z "$EVENT" ]; then
+            # Manual trigger - call scan by default
+            URL="${{ secrets.NEMO_URL }}/scan"
+          else
+            case "$EVENT" in
+              "25 3 * * 1-5")   URL="${{ secrets.NEMO_URL }}/morning-brief" ;;
+              "50 3 * * 1-5")   URL="${{ secrets.NEMO_URL }}/first-signal" ;;
+              "*/15 3-10 * * 1-5") URL="${{ secrets.NEMO_URL }}/scan" ;;
+              *) echo "Unknown schedule"; exit 0 ;;
+            esac
+          fi
           echo "Calling: $URL"
           curl -s --connect-timeout 30 --max-time 120 "$URL"
